@@ -5,38 +5,87 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
+  <form>
+    <label for="electrodvigatel">ID Электродвигателя:</label>
+    <input type="text" id="electrodvigatel" name="electrodvigatel"><br><br>
+
+    <label for="sotrudnik">ID Сотрудника:</label>
+    <input type="text" id="sotrudnik" name="sotrudnik"><br><br>
+
+    <label for="data">Дата Сборки:</label>
+    <input type="date" id="data" name="data"><br><br>
+
+    <label for="vremya">Время Сборки:</label>
+    <input type="time" id="vremya" name="vremya"><br><br>
+
+    <label for="zamena_podschipnika">Замена Подшипника (ID):</label>
+    <input type="text" id="zamena_podschipnika" name="zamena_podschipnika"><br><br>
+
+    <label for="zamena_usilitelnogo_gorenca">Замена Усилительного Горенца (ID):</label>
+    <input type="text" id="zamena_usilitelnogo_gorenca" name="zamena_usilitelnogo_gorenca"><br><br>
+
+    <label for="zamena_ventilyatora">Замена Вентилятора (ID):</label>
+    <input type="text" id="zamena_ventilyatora" name="zamena_ventilyatora"><br><br>
+
+    <label for="zamena_kolca">Замена Кольца (ID):</label>
+    <input type="text" id="zamena_kolca" name="zamena_kolca"><br><br>
+
+    <label for="zamena_storonnih_koles">Замена Сторонних Колес (ID):</label>
+    <input type="text" id="zamena_storonnih_koles" name="zamena_storonnih_koles"><br><br>
+
+    <label for="zamena_magneta">Замена Магнета (ID):</label>
+    <input type="text" id="zamena_magneta" name="zamena_magneta"><br><br>
+
+    <input type="submit" value="Отправить">
+  </form>
+
   <script>
     // Инициализация клиента Supabase
     const supabaseUrl = 'https://yyvkwphwqiwhkonrfrkm.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5dmt3cGh3cWl3aGtvbnJmcmttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM2NDk3MTUsImV4cCI6MjA0OTIyNTcxNX0.HihoTwSZjN1M-fJ7XXGqq7ROSZIBHOd6-N-INzjM2lQ';
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // Создание таблицы "Сборка и Замена"
-    async function createTable() {
-      const { error } = await supabase.from('Сборка и Замена').create({
-        ID_Электродвигателя: 'text',
-        ID_Сотрудника: 'text',
-        Дата_Сборки: 'text',
-        Время_Сборки: 'text',
-        Замена_Подшипника: 'text',
-        Замена_Усилительного_Горенца: 'text',
-        Замена_Вентилятора: 'text',
-        Замена_Кольца: 'text',
-        Замена_Сторонних_Колес: 'text',
-        Замена_Магнета: 'text'
-      });
+    // Обработчик отправки формы
+    const form = document.querySelector('form');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      // Получение данных из формы
+      const electrodvigatel = document.getElementById('electrodvigatel').value;
+      const sotrudnik = document.getElementById('sotrudnik').value;
+      const data = document.getElementById('data').value;
+      const vremya = document.getElementById('vremya').value;
+      const zamena_podschipnika = document.getElementById('zamena_podschipnika').value;
+      const zamena_usilitelnogo_gorenca = document.getElementById('zamena_usilitelnogo_gorenca').value;
+      const zamena_ventilyatora = document.getElementById('zamena_ventilyatora').value;
+      const zamena_kolca = document.getElementById('zamena_kolca').value;
+      const zamena_storonnih_koles = document.getElementById('zamena_storonnih_koles').value;
+      const zamena_magneta = document.getElementById('zamena_magneta').value;
+
+      // Отправка данных в Supabase
+      const { error } = await supabase.from('Сборка и Замена').insert([
+        {
+          ID_Электродвигателя: electrodvigatel,
+          ID_Сотрудника: sotrudnik,
+          Дата_Сборки: data,
+          Время_Сборки: vremya,
+          Замена_Подшипника: zamena_podschipnika,
+          Замена_Усилительного_Горенца: zamena_usilitelnogo_gorenca,
+          Замена_Вентилятора: zamena_ventilyatora,
+          Замена_Кольца: zamena_kolca,
+          Замена_Сторонних_Колес: zamena_storonnih_koles,
+          Замена_Магнета: zamena_magneta
+        }
+      ]);
 
       if (error) {
-        console.error('Error creating table:', error);
-        alert('Произошла ошибка при создании таблицы.');
+        console.error('Error saving data:', error);
+        alert('Произошла ошибка при сохранении данных.');
       } else {
-        console.log('Table "Сборка и Замена" created successfully!');
-        alert('Таблица "Сборка и Замена" успешно создана.');
+        alert('Данные успешно сохранены!');
+        form.reset();
       }
-    }
-
-    // Вызываем функцию для создания таблицы
-    createTable();
+    });
   </script>
 </body>
 </html>
