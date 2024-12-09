@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Сборка и Замена</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <script>
+    // Инициализация клиента Supabase
+    const supabaseUrl = 'https://yyvkwphwqiwhkonrfrkm.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5dmt3cGh3cWl3aGtvbnJmcmttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM2NDk3MTUsImV4cCI6MjA0OTIyNTcxNX0.HihoTwSZjN1M-fJ7XXGqq7ROSZIBHOd6-N-INzjM2lQ';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Создание таблицы "Сборка и Замена"
+    async function createTable() {
+      const { error } = await supabase.from('Сборка и Замена').create({
+        ID_Электродвигателя: 'text',
+        ID_Сотрудника: 'text',
+        Дата_Сборки: 'text',
+        Время_Сборки: 'text',
+        Замена_Подшипника: 'text',
+        Замена_Усилительного_Горенца: 'text',
+        Замена_Вентилятора: 'text',
+        Замена_Кольца: 'text',
+        Замена_Сторонних_Колес: 'text',
+        Замена_Магнета: 'text'
+      });
+
+      if (error) {
+        console.error('Error creating table:', error);
+        alert('Произошла ошибка при создании таблицы.');
+      } else {
+        console.log('Table "Сборка и Замена" created successfully!');
+        alert('Таблица "Сборка и Замена" успешно создана.');
+      }
+    }
+
+    // Вызываем функцию для создания таблицы
+    createTable();
+  </script>
+</body>
+</html>
