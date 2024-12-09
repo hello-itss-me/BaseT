@@ -44,12 +44,12 @@
     const supabaseUrl = 'https://yyvkwphwqiwhkonrfrkm.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5dmt3cGh3cWl3aGtvbnJmcmttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM2NDk3MTUsImV4cCI6MjA0OTIyNTcxNX0.HihoTwSZjN1M-fJ7XXGqq7ROSZIBHOd6-N-INzjM2lQ';
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
+  
     // Обработчик отправки формы
     const form = document.querySelector('form');
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-
+  
       // Получение данных из формы
       const electrodvigatel = document.getElementById('electrodvigatel').value;
       const sotrudnik = document.getElementById('sotrudnik').value;
@@ -61,7 +61,20 @@
       const zamena_kolca = document.getElementById('zamena_kolca').value;
       const zamena_storonnih_koles = document.getElementById('zamena_storonnih_koles').value;
       const zamena_magneta = document.getElementById('zamena_magneta').value;
-
+  
+      console.log('Form data:', {
+        ID_Электродвигателя: electrodvigatel,
+        ID_Сотрудника: sotrudnik,
+        Дата_Сборки: data,
+        Время_Сборки: vremya,
+        Замена_Подшипника: zamena_podschipnika,
+        Замена_Усилительного_Горенца: zamena_usilitelnogo_gorenca,
+        Замена_Вентилятора: zamena_ventilyatora,
+        Замена_Кольца: zamena_kolca,
+        Замена_Сторонних_Колес: zamena_storonnih_koles,
+        Замена_Магнета: zamena_magneta
+      });
+  
       // Отправка данных в Supabase
       const { error } = await supabase.from('Сборка и Замена').insert([
         {
@@ -77,11 +90,12 @@
           Замена_Магнета: zamena_magneta
         }
       ]);
-
+  
       if (error) {
         console.error('Error saving data:', error);
         alert('Произошла ошибка при сохранении данных.');
       } else {
+        console.log('Data saved successfully!');
         alert('Данные успешно сохранены!');
         form.reset();
       }
